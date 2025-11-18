@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Timos Geburtstag - Finde deinen Party-Typ!</title>
     <style>
         * {
@@ -469,29 +469,202 @@
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
             .header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
+                line-height: 1.2;
             }
             
             .header p {
-                font-size: 1.1em;
+                font-size: 1em;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .landing-intro h2 {
+                font-size: 1.5em;
+            }
+
+            .landing-intro p {
+                font-size: 1em;
             }
             
             .party-cards {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .party-card {
+                padding: 25px 20px;
+            }
+
+            .party-card .icon {
+                font-size: 3em;
+            }
+
+            .party-card h3 {
+                font-size: 1.4em;
+            }
+
+            .party-card p {
+                font-size: 0.95em;
+            }
+
+            .quiz-teaser {
+                padding: 20px 15px;
+            }
+
+            .quiz-teaser h3 {
+                font-size: 1.3em;
+            }
+
+            .quiz-teaser p {
+                font-size: 1em;
+            }
+
+            .quiz-start-btn {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+
+            .question h3 {
+                font-size: 1.1em;
+                line-height: 1.4;
+            }
+
+            .option {
+                padding: 12px 15px;
+                font-size: 0.95em;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 1em;
+                width: 100%;
+            }
+
+            .result-section h2 {
+                font-size: 1.5em;
+            }
+
+            .result-description {
+                font-size: 1em;
             }
             
+            .invitation {
+                padding: 25px 20px;
+            }
+
             .invitation h2 {
                 font-size: 1.8em;
+                line-height: 1.2;
+            }
+
+            .invitation h3 {
+                font-size: 1.15em !important;
+                line-height: 1.4 !important;
+                margin-bottom: 25px !important;
+            }
+
+            .invitation-details {
+                font-size: 1em;
+                line-height: 1.8;
+            }
+
+            .invitation-details strong {
+                display: block;
+                width: 100%;
+                margin-bottom: 3px;
+                font-size: 1.05em;
+            }
+
+            .invitation-details br {
+                display: block;
+                content: "";
+                margin-top: 3px;
+            }
+
+            .invitation-details p {
+                margin-bottom: 18px;
+                word-wrap: break-word;
+            }
+
+            .invitation-details a {
+                display: block;
+                margin-top: 5px;
+                word-wrap: break-word;
+                hyphens: auto;
+            }
+
+            .dresscode {
+                padding: 15px;
+                font-size: 0.9em;
+                line-height: 1.6;
+                margin-top: 20px !important;
+            }
+
+            .whatsapp-btn {
+                padding: 14px 25px;
+                font-size: 1em;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .whatsapp-container {
+                padding: 20px 15px;
             }
             
             .party-type-buttons {
                 flex-direction: column;
             }
 
-            .content {
-                padding: 30px 20px;
+            .party-btn {
+                width: 100%;
+                padding: 12px 20px;
+            }
+
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            .progress {
+                font-size: 0.85em;
+                margin-bottom: 15px;
+            }
+
+            .other-invitations p {
+                font-size: 1em;
+            }
+
+            /* Spezielle Anpassungen für Einladungen */
+            .invitation.koelsch h2,
+            .invitation.edel h2,
+            .invitation.rock h2 {
+                font-size: 1.6em;
+            }
+
+            .invitation p {
+                font-size: 0.95em;
+                line-height: 1.7;
+            }
+
+            .invitation-details {
+                margin: 25px 0 !important;
             }
         }
     </style>
@@ -516,7 +689,7 @@
                         <div class="party-card-content">
                             <span class="icon">🎭</span>
                             <h3>Kölsch & Karneval</h3>
-                            <p>Bunt, fröhlich und voller guter Laune! Hier wird geschunkelt und gefeiert!</p>
+                            <p>Bunt, fröhlich und voller guter Laune! Hier wird ausschweifend gefeiert!</p>
                         </div>
                     </div>
 
@@ -531,8 +704,8 @@
                     <div class="party-card rock" onclick="showInvitation('rock')">
                         <div class="party-card-content">
                             <span class="icon">🎸</span>
-                            <h3>Rock'n'Roll</h3>
-                            <p>Laut, rebellisch und authentisch. Für alle, die es gerne rockig mögen!</p>
+                            <h3>Rock & Festival/h3>
+                            <p>Authentisch, entspannt und voller guter Vibes. Für alle, die es gerne laut mögen!</p>
                         </div>
                     </div>
                 </div>
@@ -700,7 +873,7 @@
             const titles = {
                 koelsch: "🎭 Du bist Team Kölsch & Karneval!",
                 edel: "🥂 Du bist Team Edel & Stilvoll!",
-                rock: "🎸 Du bist Team Rock'n'Roll!"
+                rock: "🎸 Du bist Team Rock & Festival!"
             };
 
             const descriptions = {
@@ -728,10 +901,10 @@
                         <h3 style="font-size: 1.8em; margin-bottom: 20px;">Du bist eingeladen zu Timos Geburtstagsparty!</h3>
                         
                         <div class="invitation-details">
-                            <p><strong>Wer feiert?</strong> Timo wird 40!</p>
-                            <p><strong>Wann?</strong> Samstag, 21. März 2026, ab 18:00 Uhr</p>
-                            <p><strong>Wo?</strong> <a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: white; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
-                            <p><strong>RSVP:</strong> Bis 31. Januar an Esther (017627679500)</p>
+                            <p><strong>Wer feiert?</strong><br>Timo wird 40!</p>
+                            <p><strong>Wann?</strong><br>Samstag, 21. März 2026, ab 18:00 Uhr</p>
+                            <p><strong>Wo?</strong><br><a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: white; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
+                            <p><strong>RSVP:</strong><br>Bis 31. Januar an Esther (017627679500)</p>
                         </div>
 
                         <div class="dresscode">
@@ -746,7 +919,7 @@
                         </p>
 
                         <div class="whatsapp-container">
-                            <a href="https://wa.me/4917627679500?text=Alaaf%21%20Ich%20bin%20dabei%20und%20sage%20zu%20Timos%20Geburtstagsparty%20zu%21%20%F0%9F%8E%AD%F0%9F%8D%BA%F0%9F%8E%89" 
+                            <a href="https://wa.me/4917627679500?text=Alaaf%21%20De%20kanns%20op%20mich%20z%C3%A4hlen.%20Isch%20ben%20dobei%20%F0%9F%8D%BA%F0%9F%8E%89" 
                                class="whatsapp-btn" 
                                target="_blank">
                                 📱 Per WhatsApp zusagen
@@ -778,7 +951,7 @@
                             <p><strong>Anlass:</strong> 40. Geburtstag</p>
                             <p><strong>Datum:</strong> Samstag, 21. März 2026</p>
                             <p><strong>Zeit:</strong> 18:00 Uhr - 2:00 Uhr</p>
-                            <p><strong>Ort:</strong> <a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: #d4af37; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
+                            <p><strong>Ort:</strong><br><a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: #d4af37; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
                             <p><strong>RSVP:</strong> Bis 31. Januar 2026 | 017627679500 (Esther)</p>
                         </div>
 
@@ -789,8 +962,7 @@
                         </div>
 
                         <p style="font-size: 1.1em; margin-top: 30px; text-align: center; font-style: italic; font-family: Georgia, serif;">
-                            Wir freuen uns auf einen stilvollen Abend<br>
-                            mit Champagner (not provided, sorry), feinen Speisen und guten Gesprächen.
+                            Wir freuen uns auf einen stilvollen Abend mit Champagner (not provided, sorry), feinen Speisen und guten Gesprächen.
                         </p>
 
                         <div class="whatsapp-container">
@@ -816,7 +988,7 @@
                 `,
                 rock: `
                     <div class="invitation rock">
-                        <h2>⚡ ROCK THE PARTY ⚡</h2>
+                        <h2>🎸 ROCK THE PARTY</h2>
                         <h3 style="font-size: 1.6em; margin-bottom: 20px; color: #ef4444; text-transform: uppercase;">
                             Birthday Bash
                         </h3>
@@ -824,7 +996,7 @@
                         <div class="invitation-details">
                             <p><strong>WHO:</strong> Timo wird 40</p>
                             <p><strong>WHEN:</strong> Samstag, 21. März 2026 @ 18:00</p>
-                            <p><strong>WHERE:</strong> <a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: #ef4444; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
+                            <p><strong>WHERE:</strong><br><a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: #ef4444; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
                             <p><strong>RSVP:</strong> 017627679500 (Esther) bis 31. Januar</p>
                         </div>
 
@@ -836,7 +1008,6 @@
 
                         <p style="font-size: 1.3em; margin-top: 20px; text-align: center; font-weight: bold;">
                             Great Music • Cold Drinks • Good Vibes<br>
-                            Let's Rock! 🎸🔥
                         </p>
 
                         <div class="whatsapp-container">
