@@ -2,1054 +2,354 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Timos Geburtstag - Finde deinen Party-Typ!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timo wird 40! 🎈</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- GRUNDLAGEN & LAYOUT --- */
+        :root {
+            --bg-color: linear-gradient(-45deg, #eef, #fde, #eef, #fee); /* Animierter Standard-Hintergrund */
+            --text-color: #333;
+            --accent-color: #333;
+            --card-bg: #ffffff;
+            --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-headline: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --bg-image: none; /* Standard kein Bild */
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 900px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 50px 40px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 15px;
-            animation: fadeInDown 0.8s;
-        }
-
-        .header p {
-            font-size: 1.3em;
-            opacity: 0.95;
-            animation: fadeInUp 0.8s;
-        }
-
-        .content {
-            padding: 50px 40px;
-        }
-
-        /* Landing Page */
-        .landing-section {
-            display: none;
-        }
-
-        .landing-section.active {
-            display: block;
-        }
-
-        .landing-intro {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .landing-intro h2 {
-            color: #333;
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-
-        .landing-intro p {
-            color: #666;
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
-
-        .party-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .party-card {
-            border-radius: 15px;
-            padding: 30px;
-            cursor: pointer;
-            transition: all 0.4s;
-            text-align: center;
-            border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .party-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: inherit;
-            opacity: 0.9;
-            transition: opacity 0.4s;
-        }
-
-        .party-card:hover::before {
-            opacity: 1;
-        }
-
-        .party-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .party-card-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .party-card .icon {
-            font-size: 4em;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .party-card h3 {
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            color: white;
-        }
-
-        .party-card p {
-            color: rgba(255,255,255,0.95);
-            font-size: 1em;
-            line-height: 1.5;
-        }
-
-        .party-card.koelsch {
-            background: linear-gradient(135deg, #dc2626 0%, #fbbf24 100%);
-        }
-
-        .party-card.edel {
-            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-        }
-
-        .party-card.rock {
-            background: linear-gradient(135deg, #18181b 0%, #3f3f46 100%);
-        }
-
-        .quiz-teaser {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            margin-top: 30px;
-            border: 2px dashed #667eea;
-        }
-
-        .quiz-teaser h3 {
-            color: #667eea;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-
-        .quiz-teaser p {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-
-        .quiz-start-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: transform 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .quiz-start-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .quiz-section, .result-section, .invitation-section {
-            display: none;
-        }
-
-        .quiz-section.active, .result-section.active, .invitation-section.active {
-            display: block;
-        }
-
-        .question {
-            margin-bottom: 30px;
-        }
-
-        .question h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .options {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-body);
+            background: var(--bg-color);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-color);
+            transition: background 0.8s ease, color 0.8s ease; /* Sanfter Übergang beim Wechsel */
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            align-items: center;
+            min-height: 100vh;
+            position: relative; /* Für Hintergrundbild */
+            overflow-x: hidden; /* Vermeidet horizontalen Scrollbar */
         }
 
-        .option {
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
+        /* Hintergrundbild */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2; /* Dezente Deckkraft für Lesbarkeit */
+            transition: background-image 1s ease, opacity 0.8s ease;
+            z-index: -1; /* Hinter dem Inhalt */
         }
-
-        .option:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-            transform: translateX(5px);
-        }
-
-        .option.selected {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: transform 0.3s;
-            margin-top: 20px;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result-section h2 {
-            color: #667eea;
-            font-size: 2em;
-            margin-bottom: 20px;
+        
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 40px auto;
             text-align: center;
+            z-index: 1; /* Über dem Hintergrund */
         }
 
-        .result-description {
-            text-align: center;
-            font-size: 1.2em;
-            color: #666;
+        h1 {
+            font-family: var(--font-headline);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
             margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        /* --- AUSWAHL BUTTONS --- */
+        .selector-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--text-color);
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+            /* Start-Animation */
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Verzögerung für die Buttons */
+        .selector-container .theme-btn:nth-child(1) { animation-delay: 0.2s; }
+        .selector-container .theme-btn:nth-child(2) { animation-delay: 0.4s; }
+        .selector-container .theme-btn:nth-child(3) { animation-delay: 0.6s; }
+
+        /* --- EINLADUNGSKARTE --- */
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: left;
+            display: none; /* Standardmäßig ausgeblendet */
+            animation: fadeIn 0.6s ease forwards;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .details {
+            background: rgba(0,0,0,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .footer-cta {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--bg-color); /* Kontrastfarbe */
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .card a {
+            color: var(--text-color);
+            font-weight: bold; /* Hebt den Link optisch etwas hervor */
+        }
+
+        /* Hilfsklasse für Startbildschirm */
+        .intro-text {
+            font-size: 1.2rem;
+            margin-top: 50px;
             line-height: 1.6;
         }
 
-        .party-type-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
+        /* --- ANIMATIONEN --- */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .party-btn {
-            padding: 15px 30px;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1em;
+        .balloon {
+            display: inline-block; /* Wichtig für transform */
+            animation: float 3s ease-in-out infinite;
         }
 
-        .party-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .party-btn.recommended {
-            background: #667eea;
-            color: white;
-            font-weight: bold;
-        }
-
-        /* Einladungs-Styles */
-        .invitation {
-            padding: 40px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-
-        .invitation h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .invitation-details {
-            font-size: 1.2em;
-            line-height: 2;
-            margin: 20px 0;
-        }
-
-        .invitation-details strong {
-            display: inline-block;
-            width: 150px;
-        }
-
-        .dresscode {
-            background: rgba(255,255,255,0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-style: italic;
-        }
-
-        /* Kölsch Style */
-        .invitation.koelsch {
-            background: linear-gradient(135deg, #dc2626 0%, #fbbf24 100%);
-            color: white;
-            border: 5px solid #dc2626;
-        }
-
-        .invitation.koelsch h2 {
-            font-family: 'Comic Sans MS', cursive;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* Edel Style */
-        .invitation.edel {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: #f8fafc;
-            border: 2px solid #d4af37;
-        }
-
-        .invitation.edel h2 {
-            font-family: 'Georgia', serif;
-            color: #d4af37;
-            letter-spacing: 2px;
-        }
-
-        /* Rock Style */
-        .invitation.rock {
-            background: linear-gradient(135deg, #18181b 0%, #3f3f46 100%);
-            color: #fafafa;
-            border: 3px solid #ef4444;
-            position: relative;
-        }
-
-        .invitation.rock h2 {
-            font-family: 'Impact', sans-serif;
-            color: #ef4444;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            border-radius: 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .whatsapp-btn:hover {
-            background: #20BA5A;
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-        }
-
-        .whatsapp-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 25px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 15px;
-        }
-
-        .back-btn-container {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .back-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        .other-invitations {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .other-invitations p {
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .progress {
-            text-align: center;
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 0.9em;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .container {
-                border-radius: 15px;
-            }
-
-            .header {
-                padding: 30px 20px;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-                line-height: 1.2;
-            }
-            
-            .header p {
-                font-size: 1em;
-            }
-
-            .content {
-                padding: 25px 20px;
-            }
-
-            .landing-intro h2 {
-                font-size: 1.5em;
-            }
-
-            .landing-intro p {
-                font-size: 1em;
-            }
-            
-            .party-cards {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .party-card {
-                padding: 25px 20px;
-            }
-
-            .party-card .icon {
-                font-size: 3em;
-            }
-
-            .party-card h3 {
-                font-size: 1.4em;
-            }
-
-            .party-card p {
-                font-size: 0.95em;
-            }
-
-            .quiz-teaser {
-                padding: 20px 15px;
-            }
-
-            .quiz-teaser h3 {
-                font-size: 1.3em;
-            }
-
-            .quiz-teaser p {
-                font-size: 1em;
-            }
-
-            .quiz-start-btn {
-                padding: 12px 25px;
-                font-size: 1em;
-            }
-
-            .question h3 {
-                font-size: 1.1em;
-                line-height: 1.4;
-            }
-
-            .option {
-                padding: 12px 15px;
-                font-size: 0.95em;
-            }
-
-            .btn {
-                padding: 12px 30px;
-                font-size: 1em;
-                width: 100%;
-            }
-
-            .result-section h2 {
-                font-size: 1.5em;
-            }
-
-            .result-description {
-                font-size: 1em;
-            }
-            
-            .invitation {
-                padding: 25px 20px;
-            }
-
-            .invitation h2 {
-                font-size: 1.8em;
-                line-height: 1.2;
-            }
-
-            .invitation h3 {
-                font-size: 1.15em !important;
-                line-height: 1.4 !important;
-                margin-bottom: 25px !important;
-            }
-
-            .invitation-details {
-                font-size: 1em;
-                line-height: 1.8;
-            }
-
-            .invitation-details strong {
-                display: block;
-                width: 100%;
-                margin-bottom: 3px;
-                font-size: 1.05em;
-            }
-
-            .invitation-details br {
-                display: block;
-                content: "";
-                margin-top: 3px;
-            }
-
-            .invitation-details p {
-                margin-bottom: 18px;
-                word-wrap: break-word;
-            }
-
-            .invitation-details a {
-                display: block;
-                margin-top: 5px;
-                word-wrap: break-word;
-                hyphens: auto;
-            }
-
-            .dresscode {
-                padding: 15px;
-                font-size: 0.9em;
-                line-height: 1.6;
-                margin-top: 20px !important;
-            }
-
-            .whatsapp-btn {
-                padding: 14px 25px;
-                font-size: 1em;
-                width: 100%;
-                justify-content: center;
-            }
-
-            .whatsapp-container {
-                padding: 20px 15px;
-            }
-            
-            .party-type-buttons {
-                flex-direction: column;
-            }
-
-            .party-btn {
-                width: 100%;
-                padding: 12px 20px;
-            }
-
-            .back-btn {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-
-            .progress {
-                font-size: 0.85em;
-                margin-bottom: 15px;
-            }
-
-            .other-invitations p {
-                font-size: 1em;
-            }
-
-            /* Spezielle Anpassungen für Einladungen */
-            .invitation.koelsch h2,
-            .invitation.edel h2,
-            .invitation.rock h2 {
-                font-size: 1.6em;
-            }
-
-            .invitation p {
-                font-size: 0.95em;
-                line-height: 1.7;
-            }
-
-            .invitation-details {
-                margin: 25px 0 !important;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- THEMES (DESIGN VARIANTEN) --- */
+
+        /* 1. PARTY MODE */
+        body.party-mode {
+            --bg-color: #1a0b2e; /* Dunkles Lila */
+            --text-color: #ffffff;
+            --accent-color: #00f2ff; /* Neon Cyan */
+            --card-bg: rgba(45,27,78,0.95); /* Leicht transparent */
+            --font-headline: 'Arial Black', sans-serif;
+            --bg-image: url('party.png'); /* Konfetti Bild */
+        }
+        body.party-mode .cta-button { color: #1a0b2e; background: #00f2ff; }
+        body.party-mode .theme-btn:hover { background: rgba(0,242,255,0.2); }
+
+
+        /* 2. KÖLSCH MODE */
+        body.koelsch-mode {
+            --bg-color: #ffffff;
+            --text-color: #333;
+            --accent-color: #e2001a; /* Kölner Rot */
+            --card-bg: rgba(255,240,240,0.95); /* Leicht transparent */
+            --font-headline: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* Etwas verspielter */
+            --bg-image: url('dom.png'); /* Dom/Karneval Bild */
+        }
+        body.koelsch-mode .theme-btn:hover { background: rgba(226,0,26,0.2); }
+        
+        /* 3. EDEL MODE */
+        body.edel-mode {
+            --bg-color: #111;
+            --text-color: #d4af37; /* Gold */
+            --accent-color: #d4af37;
+            --card-bg: rgba(26,26,26,0.95); /* Leicht transparent */
+            --font-body: 'Times New Roman', serif;
+            --font-headline: 'Times New Roman', serif;
+            letter-spacing: 1px;
+            --bg-image: url('edel.png'); /* Luxus/Champagner Bild */
+        }
+        body.edel-mode .card { border: 1px solid #d4af37; }
+        body.edel-mode .cta-button { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
+        body.edel-mode .theme-btn:hover { background: rgba(212,175,55,0.2); }
+
+        /* Responsive Anpassungen */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            .card { padding: 20px; }
+            .theme-btn { padding: 8px 15px; font-size: 0.9rem; }
+            .cta-button { padding: 12px 25px; font-size: 1rem; }
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎉 Du bist zu Timos 40. Geburtstag eingeladen! 🎉</h1>
-            <p>Welcher Party-Typ bist du?</p>
-        </div>
 
-        <div class="content">
-            <!-- Landing Page -->
-            <div class="landing-section active">
-                <div class="landing-intro">
-                    <h2>Welche Party passt zu dir?</h2>
-                    <p>Wähle direkt deinen Favoriten oder lass dich vom Quiz inspirieren!</p>
-                </div>
+<div class="container">
+    <h1>Timo wird 40! <span class="balloon">🎈</span></h1>
+    <p class="subtitle">Wähle deine Einladung für die Party:</p>
 
-                <div class="party-cards">
-                    <div class="party-card koelsch" onclick="showInvitation('koelsch')">
-                        <div class="party-card-content">
-                            <span class="icon">🎭</span>
-                            <h3>Kölsch & Karneval</h3>
-                            <p>Bunt, fröhlich und voller guter Laune! Hier wird ausschweifend gefeiert!</p>
-                        </div>
-                    </div>
-
-                    <div class="party-card edel" onclick="showInvitation('edel')">
-                        <div class="party-card-content">
-                            <span class="icon">🥂</span>
-                            <h3>Edel & Stilvoll</h3>
-                            <p>Eleganz trifft Genuss. Champagner, gute Gespräche und stilvolle Atmosphäre.</p>
-                        </div>
-                    </div>
-
-                    <div class="party-card rock" onclick="showInvitation('rock')">
-                        <div class="party-card-content">
-                            <span class="icon">🎸</span>
-                            <h3>Rock & Festival</h3>
-                            <p>Authentisch, entspannt und voller guter Vibes. Für alle, die es gerne laut mögen!</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="quiz-teaser">
-                    <h3>🤔 Noch unentschlossen?</h3>
-                    <p>Mach das Quiz und finde heraus, welcher Party-Typ am besten zu dir passt!</p>
-                    <button class="quiz-start-btn" onclick="startQuiz()">
-                        <span>🎯</span>
-                        <span>Quiz starten</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Quiz Section -->
-            <div class="quiz-section">
-                <div class="back-btn-container">
-                    <button class="back-btn" onclick="backToLanding()" style="background: #667eea; color: white; border: 2px solid #667eea;">← Zurück zur Startseite</button>
-                </div>
-                <div class="progress">Frage <span id="current-question">1</span> von 6</div>
-                <div id="quiz-container"></div>
-                <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Weiter</button>
-            </div>
-
-            <!-- Result Section -->
-            <div class="result-section">
-                <div class="back-btn-container">
-                    <button class="back-btn" onclick="backToLanding()" style="background: #667eea; color: white; border: 2px solid #667eea;">← Zurück zur Startseite</button>
-                </div>
-                <h2 id="result-title"></h2>
-                <p class="result-description" id="result-description"></p>
-                <button class="btn" id="show-invitation-btn" onclick="showRecommendedInvitation()">Meine Einladung anzeigen</button>
-                <div class="other-invitations">
-                    <p>Oder wähle direkt einen Party-Typ:</p>
-                    <div class="party-type-buttons">
-                        <button class="party-btn" onclick="showInvitation('koelsch')">🎭 Kölsch & Karneval</button>
-                        <button class="party-btn" onclick="showInvitation('edel')">🥂 Edel & Stilvoll</button>
-                        <button class="party-btn" onclick="showInvitation('rock')">🎸 Rock'n'Roll</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Invitation Section -->
-            <div class="invitation-section">
-                <div id="invitation-display"></div>
-            </div>
-        </div>
+    <div class="selector-container">
+        <button class="theme-btn" onclick="setTheme('party')">🎈 Party Pur</button>
+        <button class="theme-btn" onclick="setTheme('koelsch')">🎭 Kölle Alaaf</button>
+        <button class="theme-btn" onclick="setTheme('edel')">🥂 Edel & Witzig</button>
     </div>
 
-    <script>
-        const questions = [
-            {
-                question: "Was ist dein ideales Getränk auf einer Party?",
-                options: [
-                    { text: "Kölsch ist die einzige Sprache, die man trinken kann - am besten aus dem Fass!", type: "koelsch" },
-                    { text: "Champagner oder Gold-Infused Coconut Water", type: "edel" },
-                    { text: "Bier aus der Flasche, Mexikaner oder Whiskey", type: "rock" }
-                ]
-            },
-            {
-                question: "Welche Musik bringt dich in Partystimmung?",
-                options: [
-                    { text: "Kölsche Tön und Stimmungslieder", type: "koelsch" },
-                    { text: "Lounge, Jazz oder Klassiker", type: "edel" },
-                    { text: "Rock, Punk oder Alternative", type: "rock" }
-                ]
-            },
-            {
-                question: "Wie würdest du am liebsten tanzen?",
-                options: [
-                    { text: "Sulang Musik läuft, danz ich immer – och wenn et nur Schunkele is.", type: "koelsch" },
-                    { text: "Eleganter Paartanz oder entspanntes Grooven", type: "edel" },
-                    { text: "Headbangen oder wild im Moshpit", type: "rock" }
-                ]
-            },
-            {
-                question: "Was darf auf keiner Party fehlen?",
-                options: [
-                    { text: "Kostüme, kölsche Party-Evergreens und gute Laune!", type: "koelsch" },
-                    { text: "Stilvolle Dekoration und gute Gespräche", type: "edel" },
-                    { text: "Musik zum mitgröhlen und eine ausgelassene Atmosphäre", type: "rock" }
-                ]
-            },
-            {
-                question: "Dein perfekter Party-Snack?",
-                options: [
-                    { text: "Halver Hahn, Kabänes, Fingerfood", type: "koelsch" },
-                    { text: "Canapés, Austern, Tapas", type: "edel" },
-                    { text: "Pizza, Falafel, Nachos", type: "rock" }
-                ]
-            },
-            {
-                question: "Wie soll die Party-Location aussehen?",
-                options: [
-                    { text: "Bunt dekoriert mit Girlanden und Luftballons", type: "koelsch" },
-                    { text: "Elegant mit Kerzen und stimmungsvoller Beleuchtung", type: "edel" },
-                    { text: "Bunt, mit coolen Lichteffekten und Plakaten", type: "rock" }
-                ]
-            }
-        ];
+    <div id="intro" class="intro-text">
+        Hey! Schön, dass du hier bist.<br>
+        Ich habe drei verschiedene Einladungen vorbereitet.<br>
+        Klick oben auf einen Button und schau, was passiert! 👇
+    </div>
 
-        let currentQuestion = 0;
-        let answers = { koelsch: 0, edel: 0, rock: 0 };
-        let recommendedType = '';
+    <div id="invitation-card" class="card">
+        <h2 id="card-title">Titel</h2>
+        <div id="card-content">Inhalt</div>
+        
+        <div class="details">
+            📅 Samstag, 21. März 2026 | 18:00 Uhr<br>
+            📍 KGV Köln Weidenpesch e.V.
+        </div>
 
-        function startQuiz() {
-            currentQuestion = 0;
-            answers = { koelsch: 0, edel: 0, rock: 0 };
-            document.querySelector('.landing-section').classList.remove('active');
-            document.querySelector('.quiz-section').classList.add('active');
-            renderQuestion();
+        <div class="footer-cta">
+            <a href="https://wa.me/4917627679500?text=Hey%20Esther,%20ich%20bin%20bei%20der%20Party%20dabei!" target="_blank" class="cta-button" id="rsvp-btn">Zusagen (via WhatsApp)</a>
+
+            <br><br>
+            <small id="hotel-hint">Hotel-Tipp: Weidenpescher Hof</small>
+        </div>
+    </div>
+</div>
+
+<script>
+    const contentData = {
+        party: {
+            title: "Party-Laune pur 🎉",
+            body: `
+                <p><strong>Leute, haltet euch fest – Timo wird 40!</strong></p>
+                <p>Und weil man 40 nur einmal wird (und das hoffentlich mit Stil, Spaß und Schuss), schmeißen wir eine Party, die keiner vergisst!</p>
+                <p>Erwartet Musik, Lachen, Tanzen und am Sonntag einen Kater mit Charakter 🐱☕</p>
+                <p><strong>📍 Wo:</strong> <a href="https://maps.app.goo.gl/zNisyHcATtLBajwh9" target="_blank">KGV Köln Weidenpesch e.V.</a>, Zugang über Graseggerstraße / Ginsterpfad (50737 Köln).<br>Keine Sorge, ihr landet nicht im falschen Garten 🌿</p>
+                <p><strong>🎉 Dresscode:</strong> Das Motto lautet "Anything Goes!" Ob dein bestes Hawaii-Hemd, das Glitzer-Top, das endlich mal wieder raus will, oder die Sneaker, in denen du die ganze Nacht durchtanzen kannst – alles ist erlaubt. Bonuspunkte gibt's für jedes Outfit, das eine gute Geschichte erzählt.</p>
+                <p><strong>🍹 Wichtig:</strong> Nur Erwachsene! Kein Kindergeburtstag, keine Kuscheltiere – nur gute Musik und volles Glas!</p>
+                <p><strong>📣 Rückmeldung:</strong> Bitte gebt mir bis zum 20. Januar 2026 ein Zeichen. Damit die Logistik stimmt und niemand auf dem Trockenen sitzen muss, lasst mich wissen, ob ihr dabei seid (und ob ihr Verstärkung mitbringt).</p>
+            `,
+            hotel: "🏨 Tipp: Das Hotel Weidenpescher Hof ist gleich ums Eck – perfekt für den gepflegten Kater-Schlaf danach.",
+            bgImage: 'url("https://source.unsplash.com/random/1200x800?confetti,party,dance")' // Zufälliges Party-Bild
+        },
+        koelsch: {
+            title: "Alaaf ehr Jecke, de Timo weet 40! 🎭",
+            body: `
+                <p><strong>Et es, wie et es – un jetz es et esuwigg!</strong></p>
+                <p>De Timo fiert offizjëll singe Enntrëtt en de „jëcke Läävesmëtte“! 💃🍻<br>Un wat jitt dat? Musik, Danze, Laache – un ne richtig jode Zick!</p>
+                <p><strong>📍 Wo:</strong> <a href="https://maps.app.goo.gl/zNisyHcATtLBajwh9" target="_blank">KGV Köln Weidenpesch e.V.</a>, Zugang över de Graseggerstraße / Ginsterpfad (50737 Köln).<br>Wer et nit findet, folgt einfach dä Lärm 🎶</p>
+                <p><strong>🎉 Dresscode:</strong> Kostüm? Jään! Bunk, knatschjeck udder wie emmer – Haupsaach, jeck un joot drop!</p>
+                <p><strong>🍻 Wichtig:</strong> Bloß för Erwaaßene – domit kenne met 'nem Nüggel de Thek net blockeet!😉</p>
+                <p><strong>📣 Röckmeldung:</strong> Jevvt mer ene Wink bes zum 20. Januar 2026. Domit mer och jenoch för all han un dat Buffet nit explodiert, saht ens, ov ehr dobei sid (un ov ehr zo zwei kütt).</p>
+            `,
+            hotel: "🏨 Tipp: Dat Hotel Weidenpescher Hof is direkt öm de Eck – perfekt för et Auskatern.",
+            bgImage: 'url("https://source.unsplash.com/random/1200x800?cologne,carnival,dom,germany")' // Zufälliges Köln/Karneval Bild
+        },
+        edel: {
+            title: "Die 40er-Gala ✨",  
+            body: `
+                <p><strong>Einladung mit Stil | Wahre Klasse altert nicht, sie wird nur besser</strong></p>
+                <p>Liebe Freunde, Timo wird 40 – Grund genug, den Smoking zu entstauben, die Gläser zu polieren und eine Gala mit Glanz, Glimmer und guter Laune zu feiern! 💃🍸</p>
+                <p><strong>📍 Wo:</strong> <a href="https://maps.app.goo.gl/zNisyHcATtLBajwh9" target="_blank">KGV Köln Weidenpesch e.V.</a>, Zugang über Graseggerstraße / Ginsterpfad (50737 Köln).<br>Folgt einfach dem Klang der knallenden Champagnerkorken. 🍾</p>
+                <p><strong>🎩 Dresscode:</strong> Elegant, extravagant oder einfach exzellent – Hauptsache, ihr bringt Glanz in den Garten!</p>
+                <p><strong>🍾 Hinweis:</strong> Der Champagner ist BYOB – Bring Your Own Bubbles! 😄 Wer’s spritzig mag, bringt die Flasche gleich selbst mit.</p>
+                <p><strong>📣 Rückmeldung:</strong> Für die finale Gästeliste bitten wir um eine kurze Note bis zum 20. Januar 2026. Um einen logistischen Fauxpas zu vermeiden und einen Abend zu garantieren, an dem es den Gästen an nichts mangelt, lasst mich bitte wissen, ob ich mit euch (und eventueller charmanter Begleitung) rechnen darf.</p>
+            `,
+            hotel: "🏨 Tipp: Das Hotel Weidenpescher Hof liegt direkt um die Ecke – für Gäste mit Geschmack.",
+            bgImage: 'url("https://source.unsplash.com/random/1200x800?luxury,champagne,gala,gold")' // Zufälliges Luxus/Champagner Bild
         }
+    };
 
-        function renderQuestion() {
-            const container = document.getElementById('quiz-container');
-            const q = questions[currentQuestion];
-            
-            container.innerHTML = `
-                <div class="question">
-                    <h3>${q.question}</h3>
-                    <div class="options">
-                        ${q.options.map((opt, index) => `
-                            <div class="option" onclick="selectOption(${index}, '${opt.type}')">
-                                ${opt.text}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('current-question').textContent = currentQuestion + 1;
-            document.getElementById('next-btn').disabled = true;
-        }
+    function setTheme(theme) {
+        // 1. Body Klasse ändern (für Farben/Schriften)
+        document.body.className = theme + '-mode';
 
-        function selectOption(index, type) {
-            const options = document.querySelectorAll('.option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            options[index].classList.add('selected');
-            
-            answers[type]++;
-            document.getElementById('next-btn').disabled = false;
-        }
+        // 2. Hintergrundbild setzen
+        const data = contentData[theme];
+        document.documentElement.style.setProperty('--bg-image', data.bgImage);
 
-        function nextQuestion() {
-            currentQuestion++;
-            
-            if (currentQuestion < questions.length) {
-                renderQuestion();
-            } else {
-                showResults();
-            }
-        }
 
-        function showResults() {
-            const maxScore = Math.max(answers.koelsch, answers.edel, answers.rock);
-            
-            if (answers.koelsch === maxScore) {
-                recommendedType = 'koelsch';
-            } else if (answers.edel === maxScore) {
-                recommendedType = 'edel';
-            } else {
-                recommendedType = 'rock';
-            }
+        // 3. Inhalt ausblenden, ändern, einblenden
+        const card = document.getElementById('invitation-card');
+        const intro = document.getElementById('intro');
+        
+        intro.style.display = 'none';
+        card.style.display = 'none'; // Temporär verstecken für Animation
+        
+        document.getElementById('card-title').innerText = data.title;
+        document.getElementById('card-content').innerHTML = data.body;
+        document.getElementById('hotel-hint').innerText = data.hotel;
+        
+        // Timeout, um CSS-Animation auszulösen (Wichtig für fadeIn)
+        setTimeout(() => {
+            card.style.display = 'block';
+        }, 10);
+    }
+</script>
 
-            const titles = {
-                koelsch: "🎭 Du bist Team Kölsch & Karneval!",
-                edel: "🥂 Du bist Team Edel & Stilvoll!",
-                rock: "🎸 Du bist Team Rock & Festival!"
-            };
-
-            const descriptions = {
-                koelsch: "Du liebst es bunt, laut und fröhlich! Karneval ist dein Element und gute Laune dein Lebensmotto. Bei dir wird geschunkelt, gelacht und gefeiert bis zum Umfallen!",
-                edel: "Du schätzt Eleganz, gute Gespräche und stilvolle Atmosphäre. Ein Glas Champagner (not provided, sorry), gedimmtes Licht und anspruchsvolle Musik - das ist deine perfekte Party!",
-                rock: "Du bist rebellisch, authentisch und liebst es laut! Für dich zählt die Musik, die Energie und die ungezwungene Atmosphäre!"
-            };
-
-            document.getElementById('result-title').textContent = titles[recommendedType];
-            document.getElementById('result-description').textContent = descriptions[recommendedType];
-
-            document.querySelector('.quiz-section').classList.remove('active');
-            document.querySelector('.result-section').classList.add('active');
-        }
-
-        function showRecommendedInvitation() {
-            showInvitation(recommendedType);
-        }
-
-        function showInvitation(type) {
-            const invitations = {
-                koelsch: `
-                    <div class="invitation koelsch">
-                        <h2>🎭 ALAAF! 🎉</h2>
-                        <h3 style="font-size: 1.8em; margin-bottom: 20px;">Du bist eingeladen zu Timos Geburtstagsparty!</h3>
-                        
-                        <div class="invitation-details">
-                            <p><strong>Wer feiert?</strong><br>Timo wird 40!</p>
-                            <p><strong>Wann?</strong><br>Samstag, 21. März 2026, ab 18:00 Uhr</p>
-                            <p><strong>Wo?</strong><br><a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: white; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
-                            <p><strong>RSVP:</strong><br>Bis 31. Januar an Esther (017627679500)</p>
-                        </div>
-
-                        <div class="dresscode">
-                            <strong>Dresscode (optional):</strong><br>
-                            Kostüm oder kölsche Farben (rut-wiess) - aber komm wie du magst!<br>
-                            Hauptsache gute Laune! 🎊
-                        </div>
-
-                        <p style="font-size: 1.3em; margin-top: 20px; text-align: center;">
-                            Es wird geschunkelt, gelacht und gefeiert!<br>
-                            Freibier für alle! 🍺
-                        </p>
-
-                        <div class="whatsapp-container">
-                            <a href="https://wa.me/4917627679500?text=Alaaf%21%20De%20kanns%20op%20mich%20z%C3%A4hlen.%20Isch%20ben%20dobei%20%F0%9F%8D%BA%F0%9F%8E%89" 
-                               class="whatsapp-btn" 
-                               target="_blank">
-                                📱 Per WhatsApp zusagen
-                            </a>
-                        </div>
-
-                        <div class="other-invitations">
-                            <p>Passt nicht zu dir? Wähle eine andere Einladung:</p>
-                            <div class="party-type-buttons">
-                                <button class="party-btn" onclick="showInvitation('edel')">🥂 Edel & Stilvoll</button>
-                                <button class="party-btn" onclick="showInvitation('rock')">🎸 Rock'n'Roll</button>
-                            </div>
-                        </div>
-                        
-                        <div class="back-btn-container" style="margin-top: 30px;">
-                            <button class="back-btn" onclick="backToLanding()">← Zurück zur Startseite</button>
-                        </div>
-                    </div>
-                `,
-                edel: `
-                    <div class="invitation edel">
-                        <h2>Eine Einladung</h2>
-                        <h3 style="font-size: 1.5em; margin-bottom: 30px; font-family: Georgia, serif; color: #d4af37;">
-                            zu einem besonderen Abend
-                        </h3>
-                        
-                        <div class="invitation-details" style="font-family: Georgia, serif;">
-                            <p><strong>Gastgeber:</strong> Timo Förster</p>
-                            <p><strong>Anlass:</strong> 40. Geburtstag</p>
-                            <p><strong>Datum:</strong> Samstag, 21. März 2026</p>
-                            <p><strong>Zeit:</strong> 18:00 Uhr - 2:00 Uhr</p>
-                            <p><strong>Ort:</strong><br><a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: #d4af37; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
-                            <p><strong>RSVP:</strong> Bis 31. Januar 2026 | 017627679500 (Esther)</p>
-                        </div>
-
-                        <div class="dresscode">
-                            <strong>Dresscode (optional):</strong><br>
-                            Cocktail-Attire oder schick - aber Hauptsache du fühlst dich wohl!<br>
-                            Eleganz ist nicht verpflichtend.
-                        </div>
-
-                        <p style="font-size: 1.1em; margin-top: 30px; text-align: center; font-style: italic; font-family: Georgia, serif;">
-                            Wir freuen uns auf einen stilvollen Abend mit Champagner (not provided, sorry), feinen Speisen und guten Gesprächen.
-                        </p>
-
-                        <div class="whatsapp-container">
-                            <a href="https://wa.me/4917627679500?text=Ich%20freue%20mich%20auf%20einen%20stilvollen%20Abend%20und%20sage%20gerne%20zu%21%20%F0%9F%A5%82%E2%9C%A8" 
-                               class="whatsapp-btn" 
-                               target="_blank">
-                                📱 Per WhatsApp zusagen
-                            </a>
-                        </div>
-
-                        <div class="other-invitations">
-                            <p>Passt nicht zu dir? Wähle eine andere Einladung:</p>
-                            <div class="party-type-buttons">
-                                <button class="party-btn" onclick="showInvitation('koelsch')">🎭 Kölsch & Karneval</button>
-                                <button class="party-btn" onclick="showInvitation('rock')">🎸 Rock'n'Roll</button>
-                            </div>
-                        </div>
-                        
-                        <div class="back-btn-container" style="margin-top: 30px;">
-                            <button class="back-btn" onclick="backToLanding()">← Zurück zur Startseite</button>
-                        </div>
-                    </div>
-                `,
-                rock: `
-                    <div class="invitation rock">
-                        <h2>🎸 ROCK THE PARTY</h2>
-                        <h3 style="font-size: 1.6em; margin-bottom: 20px; color: #ef4444; text-transform: uppercase;">
-                            Birthday Bash
-                        </h3>
-                        
-                        <div class="invitation-details">
-                            <p><strong>WHO:</strong> Timo wird 40</p>
-                            <p><strong>WHEN:</strong> Samstag, 21. März 2026 @ 18:00</p>
-                            <p><strong>WHERE:</strong><br><a href="https://maps.app.goo.gl/EK2aqYGcSRN5Fc239" target="_blank" style="color: #ef4444; text-decoration: underline;">Vereinsheim KGV Köln-Weidenpesch (KVB Scheibenstraße)</a></p>
-                            <p><strong>RSVP:</strong> 017627679500 (Esther) bis 31. Januar</p>
-                        </div>
-
-                        <div class="dresscode">
-                            <strong>Dresscode (optional):</strong><br>
-                            Band-Shirt, Lederjacke, Festival-Look - oder einfach lässig!<br>
-                            Come as you are! 🤘
-                        </div>
-
-                        <p style="font-size: 1.3em; margin-top: 20px; text-align: center; font-weight: bold;">
-                            Great Music • Cold Drinks • Good Vibes<br>
-                        </p>
-
-                        <div class="whatsapp-container">
-                            <a href="https://wa.me/4917627679500?text=Let%27s%20rock%21%20Count%20me%20in%20%F0%9F%A4%98%F0%9F%8E%B8%F0%9F%94%A5" 
-                               class="whatsapp-btn" 
-                               target="_blank">
-                                📱 Per WhatsApp zusagen
-                            </a>
-                        </div>
-
-                        <div class="other-invitations">
-                            <p>Passt nicht zu dir? Wähle eine andere Einladung:</p>
-                            <div class="party-type-buttons">
-                                <button class="party-btn" onclick="showInvitation('koelsch')">🎭 Kölsch & Karneval</button>
-                                <button class="party-btn" onclick="showInvitation('edel')">🥂 Edel & Stilvoll</button>
-                            </div>
-                        </div>
-                        
-                        <div class="back-btn-container" style="margin-top: 30px;">
-                            <button class="back-btn" onclick="backToLanding()">← Zurück zur Startseite</button>
-                        </div>
-                    </div>
-                `
-            };
-
-            document.getElementById('invitation-display').innerHTML = invitations[type];
-            
-            // Hide all sections
-            document.querySelector('.landing-section').classList.remove('active');
-            document.querySelector('.quiz-section').classList.remove('active');
-            document.querySelector('.result-section').classList.remove('active');
-            
-            // Show invitation
-            document.querySelector('.invitation-section').classList.add('active');
-        }
-
-        function backToLanding() {
-            document.querySelector('.invitation-section').classList.remove('active');
-            document.querySelector('.result-section').classList.remove('active');
-            document.querySelector('.quiz-section').classList.remove('active');
-            document.querySelector('.landing-section').classList.add('active');
-        }
-    </script>
 </body>
 </html>
